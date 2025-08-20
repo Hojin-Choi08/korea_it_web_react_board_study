@@ -5,5 +5,13 @@ export const layout = css`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: beige;
+  align-items: center;
+`;
+
+export const mainContainer = css`
+  padding: 0 100px;
+  width: 60%;
+  height: calc(100vh - 60px);
+  min-height: 800px;
+  box-sizing: border-box;
 `;
