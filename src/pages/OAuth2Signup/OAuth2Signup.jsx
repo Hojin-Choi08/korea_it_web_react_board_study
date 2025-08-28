@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import AuthInput from "../../components/AuthInput/AuthInput";
 import * as s from "./styles";
-import { signupRequest } from "../../apis/auth/authApis";
-import { useNavigate } from "react-router-dom";
+import AuthInput from "../../components/AuthInput/AuthInput";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { oauth2SignupRequest } from "../../apis/auth/authApis";
 
-function Signup() {
+function OAuth2Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState({});
-  const navigate = useNavigate("");
+  const [searchParam] = useSearchParams();
+  const navigate = useNavigate();
 
   const signupOnClickHandler = () => {
     if (
@@ -29,10 +30,12 @@ function Signup() {
       return;
     }
     //회원가입 요청 API
-    signupRequest({
+    oauth2SignupRequest({
       username: username,
       password: password,
       email: email,
+      provider: searchParam.get("provider"),
+      providerUserId: searchParam.get("providerUserId"),
     })
       .then((response) => {
         console.log(response.data);
@@ -60,18 +63,15 @@ function Signup() {
       }
     }
 
-    if (email.length > 0) {
-      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-      if (!emailRegex.test(email)) {
-        newErrorMessage.email = "이메일 형식에 맞게 입력해주세요.";
-      }
-    }
-
     setErrorMessage(newErrorMessage);
-  }, [password, email]);
+  }, [password]);
+  useEffect(() => {
+    setEmail(searchParam.get("email"));
+  }, [searchParam]);
+
   return (
     <div css={s.container}>
-      <h1>회원가입</h1>
+      <h1>연동하기</h1>
       <div css={s.box}>
         <div css={s.inputBox}>
           <AuthInput
@@ -97,26 +97,24 @@ function Signup() {
             placeholder={"이메일"}
             state={email}
             setState={setEmail}
+            disabled={true}
           />
         </div>
         <div css={s.errorBox}>
           {Object.keys(errorMessage).length !== 0 ? (
             <ul>
-              <li>
-                {errorMessage.password}
-                {errorMessage.email}
-              </li>
+              <li>{errorMessage.password}</li>
             </ul>
           ) : (
             <></>
           )}
         </div>
         <div css={s.btnBox}>
-          <button onClick={signupOnClickHandler}>회원가입</button>
+          <button onClick={signupOnClickHandler}>연동하기</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default Signup;
+export default OAuth2Signup;

@@ -1,13 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { Link, useNavigate } from "react-router-dom";
+import { LuLogIn, LuLogOut, LuUserRoundPlus } from "react-icons/lu";
 import * as s from "./styles";
-import { LuLogIn, LuUserRoundPlus } from "react-icons/lu";
+import { Link, useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { IoMdPerson } from "react-icons/io";
 
 function Header() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const principalData = queryClient.getQueryData(["getPrincipal"]);
 
   const onClickNavHandler = (path) => {
     navigate(path);
+  };
+
+  const onClickLogout = () => {
+    localStorage.removeItem("accessToken");
+    window.location.href = "/auth/signin";
   };
 
   return (
@@ -24,20 +33,31 @@ function Header() {
         </ul>
       </div>
       <div>
-        <ul>
-          <li
-            css={s.headerIcon1}
-            onClick={() => onClickNavHandler("/auth/signin")}
-          >
-            <LuLogIn />
-          </li>
-          <li
-            css={s.headerIcon2}
-            onClick={() => onClickNavHandler("/auth/signup")}
-          >
-            <LuUserRoundPlus />
-          </li>
-        </ul>
+        {principalData ? (
+          <ul>
+            <li css={s.headerIcon1}>
+              <IoMdPerson />
+            </li>
+            <li css={s.headerIcon1} onClick={onClickLogout}>
+              <LuLogOut />
+            </li>
+          </ul>
+        ) : (
+          <ul>
+            <li
+              css={s.headerIcon1}
+              onClick={() => onClickNavHandler("/auth/signin")}
+            >
+              <LuLogIn />
+            </li>
+            <li
+              css={s.headerIcon1}
+              onClick={() => onClickNavHandler("/auth/signup")}
+            >
+              <LuUserRoundPlus />
+            </li>
+          </ul>
+        )}
       </div>
     </div>
   );
