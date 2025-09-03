@@ -13,7 +13,7 @@ function Profile() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
-  const { isLoggedIn, principal } = usePrincipalState();
+  const { principal } = usePrincipalState();
 
   const tabClickHandler = (path) => {
     setTabChild(path === "myboard" ? 1 : 2);

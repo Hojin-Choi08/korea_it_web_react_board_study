@@ -9,7 +9,7 @@ import { data } from "react-router-dom";
 
 function Layout({ children }) {
   const accessToken = localStorage.getItem("accessToken");
-  const { isLoggedIn, principal, login, logout } = usePrincipalState();
+  const { login } = usePrincipalState();
   const { isLoading } = useQuery({
     queryKey: ["getPrincipal"],
     queryFn: getPrincipalRequest,

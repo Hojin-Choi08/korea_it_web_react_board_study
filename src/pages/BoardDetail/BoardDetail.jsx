@@ -9,7 +9,7 @@ function BoardDetail() {
   const [boardData, setBoardData] = useState({});
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { isLoggedIn, principal } = usePrincipalState();
+  const { principal } = usePrincipalState();
 
   const removeOnClickHandler = (boardId) => {
     removeBoard(boardId).then((response) => {

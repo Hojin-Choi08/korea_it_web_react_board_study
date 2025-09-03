@@ -13,7 +13,7 @@ function Update() {
   const [boardData, setBoardData] = useState({ title: "", content: "" });
   const { boardId } = useParams();
   const navigate = useNavigate();
-  const { isLoggedIn, principal } = usePrincipalState();
+  const { principal } = usePrincipalState();
 
   const updateBoardMutation = useMutation({
     mutationKey: "updateBoard",

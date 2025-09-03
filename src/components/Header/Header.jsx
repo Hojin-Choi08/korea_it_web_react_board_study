@@ -4,7 +4,6 @@ import * as s from "./styles";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdPerson } from "react-icons/io";
 import { usePrincipalState } from "../../store/usePrincipalStore";
-import { useEffect } from "react";
 
 function Header() {
   const navigate = useNavigate();
