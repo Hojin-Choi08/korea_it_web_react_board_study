@@ -2,21 +2,20 @@
 import { LuLogIn, LuLogOut, LuUserRoundPlus } from "react-icons/lu";
 import * as s from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 import { IoMdPerson } from "react-icons/io";
+import { usePrincipalState } from "../../store/usePrincipalStore";
+import { useEffect } from "react";
 
 function Header() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const principalData = queryClient.getQueryData(["getPrincipal"]);
+  const [isLoggedIn, principal, logout] = usePrincipalState();
 
   const onClickNavHandler = (path) => {
     navigate(path);
   };
 
   const onClickLogout = () => {
-    localStorage.removeItem("accessToken");
-    window.location.href = "/auth/signin";
+    logout();
   };
 
   return (
@@ -33,9 +32,14 @@ function Header() {
         </ul>
       </div>
       <div>
-        {principalData ? (
+        {isLoggedIn ? (
           <ul>
-            <li css={s.headerIcon1}>
+            <li
+              css={s.headerIcon1}
+              onClick={() =>
+                onClickNavHandler(`account/profile/${principal.username}`)
+              }
+            >
               <IoMdPerson />
             </li>
             <li css={s.headerIcon1} onClick={onClickLogout}>
