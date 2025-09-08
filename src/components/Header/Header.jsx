@@ -7,7 +7,7 @@ import { usePrincipalState } from "../../store/usePrincipalStore";
 
 function Header() {
   const navigate = useNavigate();
-  const [isLoggedIn, principal, logout] = usePrincipalState();
+  const { isLoggedIn, principal, logout } = usePrincipalState();
 
   const onClickNavHandler = (path) => {
     navigate(path);
@@ -36,7 +36,7 @@ function Header() {
             <li
               css={s.headerIcon1}
               onClick={() =>
-                onClickNavHandler(`account/profile/${principal.username}`)
+                onClickNavHandler(`/account/profile/${principal.username}`)
               }
             >
               <IoMdPerson />
@@ -54,7 +54,7 @@ function Header() {
               <LuLogIn />
             </li>
             <li
-              css={s.headerIcon1}
+              css={s.headerIcon2}
               onClick={() => onClickNavHandler("/auth/signup")}
             >
               <LuUserRoundPlus />

@@ -5,12 +5,11 @@ import Header from "../Header/Header";
 import * as s from "./styles";
 import { useEffect } from "react";
 import { usePrincipalState } from "../../store/usePrincipalStore";
-import { data } from "react-router-dom";
 
 function Layout({ children }) {
   const accessToken = localStorage.getItem("accessToken");
-  const { login } = usePrincipalState();
-  const { isLoading } = useQuery({
+  const { isLoggedIn, principal, login, logout } = usePrincipalState();
+  const { data, isLoading } = useQuery({
     queryKey: ["getPrincipal"],
     queryFn: getPrincipalRequest,
     refetch: 1,
@@ -18,7 +17,7 @@ function Layout({ children }) {
   });
 
   useEffect(() => {
-    if (data.data.status === "success") {
+    if (data?.data.status === "success") {
       login(data?.data.data);
     }
   }, [data, login]);

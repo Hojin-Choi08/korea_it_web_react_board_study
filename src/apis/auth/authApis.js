@@ -1,23 +1,24 @@
 import { instance } from "../utils/instance";
 
 export const getPrincipalRequest = async () => {
-  instance.interceptors.user((config) => {
-    const accessToken = localStorage.getItem("accessToken");
+	instance.interceptors.request.use((config) => {
+		const accessToken = localStorage.getItem("accessToken");
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+		if (accessToken) {
+			config.headers.Authorization = `Bearer ${accessToken}`;
+		}
 
-    return config;
-  });
+		return config;
+	});
 
-  try {
-    const response = await instance.get("/auth/principal");
-    return response;
-  } catch (error) {
-    return error.response;
-  }
+	try {
+		const response = await instance.get("/auth/principal");
+		return response;
+	} catch (error) {
+		return error.response;
+	}
 };
+
 export const signupRequest = async (data) => {
   try {
     const response = await instance.post("/auth/signup", data);

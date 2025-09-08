@@ -17,3 +17,11 @@ export const sendMailRequest = async (data) => {
     return error.response;
   }
 };
+
+export const changeProfileImg = async (data) => {
+  try {
+    const response = await instance.post("/account/change/profileimg", data);
+  } catch (error) {
+    return error.response;
+  }
+};

@@ -12,7 +12,7 @@ function ChangePassword() {
   const [newPassword, setNewPassword] = useState();
   const [newPasswordConfirm, setNewPasswordConfirm] = useState();
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoggedIn, principal, logout] = usePrincipalState();
+  const { isLoggedIn, principal, logout } = usePrincipalState();
   const navigate = useNavigate();
 
   const changePasswordMutation = useMutation({

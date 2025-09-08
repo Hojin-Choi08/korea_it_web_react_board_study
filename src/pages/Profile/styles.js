@@ -19,18 +19,12 @@ export const profileContainer = css`
 export const profileHeader = css`
   width: 100%;
   height: 200px;
-`;
-
-export const profileBox = css`
-  width: 100%;
-  height: 500px;
-  background-color: crimson;
+  display: flex;
 `;
 
 export const profileImgBox = css`
-  width: 200px;
+  width: 250px;
   height: 100%;
-  background-color: chartreuse;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,8 +58,8 @@ export const profileInfoBox = css`
 
   & > div {
     display: flex;
-    gap: 15px;
     align-items: center;
+    gap: 15px;
 
     & > p {
       margin: 0;
@@ -73,7 +67,7 @@ export const profileInfoBox = css`
 
     & > button {
       border: none;
-      padding: 5px 8px;
+      padding: 3px 5px;
       font-size: 11px;
       font-weight: 600;
       border-radius: 4px;
@@ -82,6 +76,13 @@ export const profileInfoBox = css`
       cursor: pointer;
     }
   }
+`;
+
+export const profileBox = css`
+  width: 100%;
+  height: 500px;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
 `;
 
 export const profileTab = (tabChild) => css`
@@ -105,11 +106,11 @@ export const profileTab = (tabChild) => css`
       color: #333;
       cursor: pointer;
 
-      &:nth-child(${tabChild}) {
+      &:nth-of-type(${tabChild}) {
         border-bottom: 1px solid white;
       }
 
-      li:hover {
+      &:hover {
         background-color: #f2f2f2;
         font-weight: 600;
       }
